@@ -12,15 +12,14 @@
 
 // purchaseCar.call(car1, "$", "50000")
 
-
 // polyfill
 Function.prototype.myCall = function (context = {}, ...args) {
-    if(typeof this !== 'function'){
-        throw new Error(this + 'It is not a function')
-    }
+  if (typeof this !== "function") {
+    throw new Error(this + "It is not a function");
+  }
 
-    context.fn = this;
-    context.fn(...args);
+  context.fn = this;
+  context.fn(...args);
 };
 
 let car2 = {
@@ -34,5 +33,4 @@ function myPurchaseCar(currency, price) {
   );
 }
 
-
-myPurchaseCar.myCall(car2, "$", "50000")
+myPurchaseCar.myCall(car2, "$", "50000");

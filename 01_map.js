@@ -10,9 +10,3 @@ Array.prototype.myMap = function(cb){
     }
     return temp;
 }
-
-// example: 
-const arr = [1,2,3,4];
-const square = arr.myMap((item, i, arr)=> item*item);
-console.log(square)
-// result: [1,4,9,16]
