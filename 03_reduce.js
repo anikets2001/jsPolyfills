@@ -1,7 +1,9 @@
 // polyfill for reduce
 
-// syntax of reduce
-// Array.reduce((acc, curr, i, arr)=> {}, initialValue)
+/*---
+  reduce method returns a single value after performing some callback condition on each element of a given array
+  syntax: Array.reduce((acc, curr, index, arr)=> {}, initialValue)
+---*/
 
 Array.prototype.myReduce = function (cb, initialValue) {
   let accumulator = initialValue;
@@ -19,4 +21,4 @@ const sum = arr.myReduce((acc, curr, i, arr) => {
   return acc + curr;
 }, 0);
 
-console.log(sum);
+console.log(sum); //10

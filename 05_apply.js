@@ -1,29 +1,30 @@
-
-
 // polyfill
-Function.prototype.myApply = function (context = {}, args=[]) {
-    if (typeof this !== "function") {
-      throw new Error(this + "It is not a function");
-    }
 
-    if(!Array.isArray(args)){
-        throw new TypeError('CreateListArrayLike called on non-object')
-    }
-  
-    context.fn = this;
-    context.fn(...args);
-  };
-  
-  let car2 = {
-    color: "red",
-    company: "ferrari",
-  };
-  
-  function myPurchaseCar(currency, price) {
-    console.log(
-      `I have purchased ${this.color} - ${this.company} car for ${currency}-${price}`
-    );
+/*---
+apply function call a function after specifying the current 'this' fot an object and
+taking arguments in a array
+syntax: fn.apply(context, [arguments])
+---*/
+
+Function.prototype.myApply = function (context = {}, args = []) {
+  if (typeof this !== "function") {
+    throw new Error(`${this} is not a function`);
   }
-  
-  myPurchaseCar.myApply(car2, ["$", "50000"]);
-  
+
+  if (!Array.isArray(args)) {
+    throw new Error(`args is not an array`);
+  }
+
+  context.fn = this;
+  context.fn(...args);
+};
+
+const obj = {
+  name: "Aniket",
+};
+
+function greet(greeting, salutation) {
+  console.log(greeting, salutation, this.name);
+}
+
+greet.myApply(obj, ["Hello", "Mr."]);

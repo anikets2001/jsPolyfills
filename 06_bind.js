@@ -1,17 +1,12 @@
-let car2 = {
-  color: "red",
-  company: "ferrari",
-};
-
-function myPurchaseCar(currency, price) {
-  console.log(
-    `I have purchased ${this.color} - ${this.company} car for ${currency}-${price}`
-  );
-}
+/*---
+bind method returns a new function after binding this with a given object
+we can invoke that returned function later
+syntax: const returnedFunc =  fn.bind(obj, comma separated arguments)
+---*/
 
 Function.prototype.myBind = function (context = {}, ...args) {
   if (typeof this !== "function") {
-    throw new Error(this + " cannot be bound as it is not callable");
+    throw new Error(`${this} is not a function`);
   }
 
   context.fn = this;
@@ -20,6 +15,13 @@ Function.prototype.myBind = function (context = {}, ...args) {
   };
 };
 
-const newFunc = myPurchaseCar.myBind(car2);
+const obj = {
+  name: "Aniket",
+};
 
-newFunc("$", 50000);
+function greet(greeting, salutation) {
+  console.log(`${greeting} ${salutation} ${this.name}!`);
+}
+
+const returnedFunc = greet.myBind(obj, "Hello", "Mr.");
+returnedFunc();

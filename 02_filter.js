@@ -1,13 +1,17 @@
 // polyfill for filter
 
-// syntax of filter
-// Array.filter((num, i, arr)=> {})
+/*---
+ filter method selects(filer) the elements from an array those are passing the callback condition provided
+ it returns a new array
+ syntax: Array.filter((item, i, arr)=> {})
+---*/
 
 Array.prototype.myFilter = function (cb) {
   let temp = [];
   for (let i = 0; i < this.length; i++) {
     if (cb(this[i], i, this)) temp.push(this[i]);
   }
+
   return temp;
 };
 

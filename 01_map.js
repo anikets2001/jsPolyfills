@@ -10,3 +10,14 @@ Array.prototype.myMap = function(cb){
     }
     return temp;
 }
+
+/*--
+ map function iterates the items and perform a callback action on each item/element in an array and return a new array 
+ syntax: Array.map((item, i ,arr)=> {})
+--*/
+
+// example:
+const arr = [1, 2, 3, 4];
+const result = arr.myMap((item) => item * 2);
+
+console.log(result);

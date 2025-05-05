@@ -1,36 +1,25 @@
 // polyfill for call()
 
-// example of call()
-// let car1 = {
-//     color: 'red',
-//     company: 'ferrari'
-// }
+/*---
+call function call a function after specifying the current 'this' to an object and taking arguments as comma separated
+syntax: fn.call(context, comma separated arguments)
+---*/
 
-// function purchaseCar(currency, price){
-//     console.log(`I have purchased ${this.color} - ${this.company} car for ${currency}-${price}`)
-// }
-
-// purchaseCar.call(car1, "$", "50000")
-
-// polyfill
 Function.prototype.myCall = function (context = {}, ...args) {
   if (typeof this !== "function") {
-    throw new Error(this + "It is not a function");
+    throw new Error(`${this} is not a function`);
   }
 
   context.fn = this;
   context.fn(...args);
 };
 
-let car2 = {
-  color: "red",
-  company: "ferrari",
+const obj = {
+  name: "Aniket",
 };
 
-function myPurchaseCar(currency, price) {
-  console.log(
-    `I have purchased ${this.color} - ${this.company} car for ${currency}-${price}`
-  );
+function greet(greeting) {
+  console.log(`${greeting} ${this.name}!`);
 }
 
-myPurchaseCar.myCall(car2, "$", "50000");
+greet.myCall(obj, "hello");
