@@ -16,9 +16,9 @@ Array.prototype.myReduce = function (cb, initialValue) {
 };
 
 // example:
-const arr = [1, 2, 3, 4];
+const arr = [1,1,3];
 const sum = arr.myReduce((acc, curr, i, arr) => {
   return acc + curr;
-}, 0);
+});
 
 console.log(sum); //10

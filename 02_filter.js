@@ -1,7 +1,8 @@
 // polyfill for filter
 
 /*---
- filter method selects(filer) the elements from an array those are passing the callback condition provided
+ filter method selects(filer) the elements from an array 
+ those are passing the callback condition provided
  it returns a new array
  syntax: Array.filter((item, i, arr)=> {})
 ---*/

@@ -12,7 +12,8 @@ Array.prototype.myMap = function(cb){
 }
 
 /*--
- map function iterates the items and perform a callback action on each item/element in an array and return a new array 
+ map function iterates the items and perform a callback action on each 
+ item/element in an array and return a new array 
  syntax: Array.map((item, i ,arr)=> {})
 --*/
 

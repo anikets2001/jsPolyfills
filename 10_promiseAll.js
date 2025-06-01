@@ -1,5 +1,6 @@
 // promise.all polyfill
 
+// PROMISE.ALL
 // promises
 function promiseOne() {
   return new Promise((resolve, reject) => {
@@ -20,7 +21,7 @@ function promiseTwo() {
 function promiseThree() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      reject("promiseThree get rejected");
+      resolve("promiseThree get resolved");
     }, 1000);
   });
 }

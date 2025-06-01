@@ -1,5 +1,5 @@
 /*-- once function
-function that runs only once (no matter how many times it's invoked)
+function that runs only once (no matter how many times it's invoked/called)
 ---*/
 
 function once(func, context) {
@@ -28,3 +28,18 @@ helloOnce();
 helloOnce();
 helloOnce();
 helloOnce();
+
+// with context
+const user = {
+  name: "Aniket",
+  greet() {
+    console.log(`Hello, my name is ${this.name}`);
+  },
+};
+
+
+const greetOnce = once(user.greet, user);
+greetOnce(); // Hello, my name is Aniket
+greetOnce(); // (nothing happens)
+greetOnce(); // (nothing happens)
+
