@@ -1,201 +1,211 @@
-/*---polyfill for map start---*/
+// debounce function
 
-/*----
-1. map
-map function: map returns a new array after iterating on each element and performing some callback condition on each element of a given array
-syntax: Array.map((item, index, arr)=> {})
----*/
+// function debounce(func, delay) {
+//   let timerId;
 
-Array.prototype.myMap = function (cb) {
-  let temp = [];
-  for (let i = 0; i < this.length; i++) {
-    temp.push(cb(this[i], i, this));
-  }
+//   return function (...args) {
+//     clearTimeout(timerId);
+//     timerId = setTimeout(() => {
+//       func.apply(this, args);
+//     }, delay);
+//   };
+// }
 
-  return temp;
-};
+// function debounceFunc(e) {
+//   console.log(e.target.value);
+// }
 
-// example:
-const arr = [1, 2, 3, 4];
-const result = arr.myMap((item, index, arr) => item * 2);
-console.log("result of map:", result);
+// const handleInput = debounce(debounceFunc, 2000);
+// document.getElementById("search").addEventListener("input", handleInput);
 
-/*---polyfill for map end---*/
+// throttle function
 
-/*--- polyfill for filter start ---*/
+// function throttle(func, delay) {
+//   let inThrottle = false;
 
-/*----
-2. filter
-filter function: filter selects(filter out) one or more elements from a given array based on given callback condition, and return a new array
-syntax: Array.filter((item, index, arr)=> {})
----*/
+//   return function (...args) {
+//     if (!inThrottle) {
+//       func.apply(this, args);
+//       inThrottle = true;
 
-Array.prototype.myFilter = function (cb) {
-  let temp = [];
-  for (let i = 0; i < this.length; i++) {
-    if (cb(this[i], i, this)) temp.push(this[i]);
-  }
-};
+//       setTimeout(() => {
+//         inThrottle = false;
+//       }, delay);
+//     }
+//   };
+// }
 
-const filterArr = [1, 2, 3, 4, 5, 6];
+// function handleClick() {
+//   console.log("clicked");
+// }
 
-const filterResult = filterArr.filter(
-  (item, index, filterArr) => item % 2 == 0
-);
+// const throttledClick = throttle(handleClick, 2000);
+// document
+//   .getElementById("throttle-btn")
+//   .addEventListener("click", throttledClick);
 
-console.log("result of my filter function", filterResult);
+// flatten deeply nested array
+// function flattenArray(arr) {
+//   if (!Array.isArray(arr)) return arr;
 
-/*--- polyfill for filter end ---*/
+//   let result = [];
 
-/*--- polyfill for reduce start ---*/
+//   for (let item of arr) {
+//     if (Array.isArray(item)) {
+//       result = result.concat(flattenArray(item));
+//     } else {
+//       result.push(item);
+//     }
+//   }
 
-/*----
-3. reduce
-reduce function: reduce returns a single value after performing some callback function operation on each element of given array
-syntax: Array.reduce((accumulator,currentValue, index, arr)=> {}, initialValue)
----*/
+//   return result;
+// }
 
-Array.prototype.myReduce = function (cb, initialValue) {
-  let accumulator = initialValue;
-  for (let i = 0; i < this.length; i++) {
-    accumulator = accumulator ? cb(accumulator, this[i], i, this) : this[i];
-  }
+// const arr = [1, 2, 3, [4, 5, [6, 7, 8]]];
+// console.log(flattenArray(arr));
 
-  return accumulator;
-};
+// deepClone function
 
-const accArr = [1, 2, 3, 4];
-const reduceRes = accArr.myReduce((acc, curr, index, accArr) => {
-  return acc + curr;
-}, 0);
+// function deepClone(obj) {
+//   if (obj === null || typeof obj !== "object") return obj;
 
-console.log("result of my reduce polyfill:", reduceRes);
+//   let cloned = {};
+//   for (let key in obj) {
+//     if (obj.hasOwnProperty(key)) {
+//       cloned[key] = deepClone(obj[key]);
+//     }
+//   }
 
-/*--- polyfill for reduce end ---*/
+//   return cloned;
+// }
 
-/*--- call polyfill start ---*/
-/*---
-3. call
-call function: call function is used to explicity call a function with the given 'this' object context, it takes parameters as comma separated
-syntax: func.call(obj, 'arg1',  'arg2', 'arg3')
----*/
+// const original = {
+//   name: "Aniket",
+//   address: {
+//     city: "gurgaon",
+//     sector: 38,
+//   },
+// };
 
-Function.prototype.myCall = function (context = {}, ...args) {
-  if (typeof this !== "function") {
-    throw new Error(`${this} is not a function`);
-  }
+// const clonedObj = deepClone(original);
+// clonedObj.address.city = "Noida";
+// console.log(original);
+// console.log(clonedObj);
 
-  context.fn = this;
-  context.fn(...args);
-};
+// polyfills
 
-const callObj = {
-  name: "Aniket",
-};
+// map
 
-function callFunc(greetingMsg, salutation) {
-  console.log(
-    `Result of call function: ${greetingMsg} ${salutation} ${this.name}`
-  );
-}
+// Array.prototype.myMap = function (cb) {
+//   let result = [];
 
-callFunc.call(callObj, "Hello", "Mr.");
+//   for (let i = 0; i < this.length; i++) {
+//     result.push(cb(this[i], i, this));
+//   }
+//   return result;
+// };
 
-/*--- call polyfill end ---*/
+// const arr = [1, 2, 3, 4];
+// const output = arr.myMap((item) => item * 2);
+// console.log(output);
 
-/*--- apply polyfill start ---*/
+// filter
+// Array.prototype.myFilter = function (cb) {
+//   let result = [];
 
-/*---
-3. apply
-call function: apply function is used to explicity call a function with the given 'this' object context, it takes parameters as an array
-syntax: func.apply(obj, ['arg1',  'arg2', 'arg3'])
----*/
+//   for (let i = 0; i < this.length; i++) {
+//     if (cb(this[i], i, this)) result.push(this[i]);
+//   }
 
-Function.prototype.myApply = function (context = {}, args = []) {
-  if (typeof this !== "function") {
-    throw new Error(`${this} is not a function`);
-  }
+//   return result;
+// };
 
-  if (!Array.isArray(args)) {
-    throw new TypeError(`${args} must be an array`);
-  }
+// const arr = [1, 2, 3, 4];
+// const output = arr.myFilter((item) => item % 2 === 0);
+// console.log(output);
 
-  context.fn = this;
-  context.fn(...args);
-};
+// reduce
 
-const applyObj = {
-  name: "Aniket",
-};
+// Array.prototype.myReduce = function (cb, initialValue) {
+//   let accumulator = initialValue;
 
-function applyFunc(greetingMsg, salutation) {
-  console.log(
-    `Result of apply function: ${greetingMsg} ${salutation} ${this.name}`
-  );
-}
+//   for (let i = 0; i < this.length; i++) {
+//     accumulator = accumulator ? cb(accumulator, this[i], i, this) : this[i];
+//   }
 
-applyFunc.myApply(callObj, ["Hello", "Mr."]);
+//   return accumulator;
+// };
 
-/*--- apply polyfill end ---*/
+// const arr = [1, 2, 3, 4];
+// const result = arr.myReduce((acc, curr) => acc + curr, 0);
 
-/*--- bind polyfill start ---*/
+// console.log(result);
 
-/*---
-3. bind
-bind function: bind function is used to bind  'this' explicitly to a given object and call a function on that object, it returns a function which we can invoke later
-syntax: const returnedFunc =  func.bind(obj, 'arg1',  'arg2', 'arg3')
----*/
+// call
+// Function.prototype.myCall = function (context = {}, ...args) {
+//   if (typeof this !== "function") {
+//     throw new Error(`${this} must be a function`);
+//   }
 
-Function.prototype.myBind = function (context = {}, ...args) {
-  if (typeof this !== "function") {
-    throw new Error(`${this} is not a function`);
-  }
+//   context.fn = this;
 
-  context.fn = this;
-  return function (...newArgs) {
-    return context.fn.call(context, ...args, ...newArgs);
-  };
-};
+//   context.fn(...args);
+// };
 
-const bindObj = {
-  name: "Aniket",
-};
+// const obj = {
+//   name: "Aniket",
+// };
 
-function bindFunc(greeting, salutation) {
-  console.log(
-    `Result of bind function: ${greeting} ${salutation} ${this.name}!`
-  );
-}
+// function greet(greetingMs, salutation) {
+//   console.log(`${greetingMs} ${salutation} ${this.name}`);
+// }
 
-const returnedFunc = bindFunc.call(bindObj, "Hello", "Mr.");
+// greet.myCall(obj, "Hello", "Mr.");
 
-/*--- bind polyfill end ---*/
+// Function.prototype.myApply = function (context = {}, args = []) {
+//   if (typeof this !== "function") {
+//     throw new Error(`${this} must be a function`);
+//   }
 
-/*--- once polyfill start ---*/
+//   if (!Array.isArray(args)) {
+//     throw new TypeError(`${args} must be an array`);
+//   }
 
-// once function prevents a function to be invoked again and again
+//   context.fn = this;
+//   context.fn(...args);
+// };
 
-function once(func, context) {
-  let ran;
-  return function () {
-    if (func) {
-      ran = func.apply(context || this, arguments);
-      func = null;
-    }
-    return ran;
-  };
-}
+// const obj = {
+//   name: "Aniket",
+// };
 
-const hello = () => console.log("hello invoked many times");
-hello();
-hello();
-hello();
-hello();
+// function greet(greeting, salutation) {
+//   console.log(greeting, salutation, this.name);
+// }
 
-const helloOnce = once(() => console.log("hello invoked only once"));
-helloOnce();
-helloOnce();
-helloOnce();
-helloOnce();
+// greet.myApply(obj, ["Hello", "Mr."]);
 
-/*--- once polyfill end ---*/
+// bind
+
+// Function.prototype.myBind = function (context = {}, ...args) {
+//   if (typeof this !== "function") {
+//     throw new Error(`${this} must be a function`);
+//   }
+
+//   context.fn = this;
+
+//   return function (...newArgs) {
+//     return context.fn.call(context, ...args, ...newArgs);
+//   };
+// };
+
+// const obj = {
+//   name: "Aniket",
+// };
+
+// function greet(greeting, salutation) {
+//   console.log(`${greeting} ${salutation} ${this.name}!`);
+// }
+
+// const returnedFunc = greet.myBind(obj, "Hello", "Mr.");
+// returnedFunc();
